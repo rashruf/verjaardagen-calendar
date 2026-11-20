@@ -1,0 +1,22 @@
+---
+layout: null
+---
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//rashruf//familie-verjaardagen//NL
+METHOD:PUBLISH
+X-WR-CALNAME:Familie (MyHeritage)
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+{% for p in site.data.familie %}BEGIN:VEVENT
+UID:fam-{{ p.naam | slugify }}-{{ p.md }}@rashruf
+DTSTAMP:20261120T000000Z
+DTSTART;VALUE=DATE:2024{{ p.md }}
+RRULE:FREQ=YEARLY
+{% if p.s == 'L' %}SUMMARY:🎂 {{ p.naam }}
+DESCRIPTION:Verjaardag{% if p.rel %} — {{ p.rel }}{% endif %}
+{% else %}SUMMARY:🕯️ {{ p.naam }} († {% if p.dood %}{{ p.dood }}{% else %}datum onbekend{% endif %})
+DESCRIPTION:Geboortedag — overleden{% if p.dood %} op {{ p.dood }}{% else %} (datum onbekend){% endif %}\nGeboren in {{ p.jaar }}{% if p.rel %}\n{{ p.rel }}{% endif %}
+{% endif %}TRANSP:TRANSPARENT
+END:VEVENT
+{% endfor %}END:VCALENDAR
