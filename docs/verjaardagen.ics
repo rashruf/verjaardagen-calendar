@@ -1,0 +1,19 @@
+---
+layout: null
+---
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//rashruf//verjaardagen//NL
+METHOD:PUBLISH
+X-WR-CALNAME:Verjaardagen
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+{% for b in site.data.verjaardagen %}BEGIN:VEVENT
+UID:{{ b.naam | slugify }}-{{ b.maand }}{{ b.dag }}@rashruf
+DTSTAMP:20261120T000000Z
+DTSTART;VALUE=DATE:2026{{ b.maand }}{{ b.dag }}
+RRULE:FREQ=YEARLY
+SUMMARY:🎂 {{ b.naam }}
+TRANSP:TRANSPARENT
+END:VEVENT
+{% endfor %}END:VCALENDAR
